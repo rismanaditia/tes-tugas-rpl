@@ -28,6 +28,8 @@ public class inputadmin extends javax.swing.JFrame {
     public Statement st;
     public ResultSet rs;
     public DefaultTableModel tm;
+    public PreparedStatement pst;
+    private String sql;
    
     public inputadmin() {
         initComponents();
@@ -74,12 +76,17 @@ public class inputadmin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelodp = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        tfNo = new javax.swing.JTextField();
 
         jTextField3.setText("jTextField3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Input data ODP");
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel1.setText("Input & Edit Data ODP");
 
         jLabel2.setText("NIK");
 
@@ -120,59 +127,102 @@ public class inputadmin extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelodp);
 
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("No");
+
+        tfNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(41, 41, 41)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfNIK)
-                                    .addComponent(tfNama)
-                                    .addComponent(tfAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(btInput, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfNo, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfNIK)
+                                .addComponent(tfNama)
+                                .addComponent(tfAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Delete)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(btInput, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(tfAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btInput)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(tfNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addComponent(btInput))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton1)
+                        .addGap(53, 53, 53)
+                        .addComponent(Delete)))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -181,8 +231,25 @@ public class inputadmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bersih(){
+        tfNIK.setText("");
+        tfNama.setText("");
+        tfAlamat.setText("");
+    }
     private void tfNIKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNIKActionPerformed
         // TODO add your handling code here:
+        try{
+            rs = st.executeQuery("select * from `tabel odp` where NIK='"+tfNIK.getText()+"' ");
+            if (rs.next()) {
+                tfNIK.setText(rs.getString("NIK"));
+                tfNama.setText(rs.getString("Nama"));
+                tfAlamat.setText(rs.getString("Alamat"));
+            }else{
+                bersih();
+            }
+        }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, "error");
+    }
     }//GEN-LAST:event_tfNIKActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -195,15 +262,14 @@ public class inputadmin extends javax.swing.JFrame {
     private void btInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInputActionPerformed
         // TODO add your handling code here:
       input_data id = new input_data();
-      int no = 1;
-      id.No = Integer.toString(no);
-      no++;
+      id.No = tfNo.getText();
       id.NIK = tfNIK.getText();
       id.Nama = tfNama.getText();
       id.Alamat = tfAlamat.getText();
         try {
             id.simpan();
                   JOptionPane.showMessageDialog(rootPane,"berhasil dimasukan");
+                  bersih();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "error");
         }
@@ -211,6 +277,50 @@ public class inputadmin extends javax.swing.JFrame {
 
       
     }//GEN-LAST:event_btInputActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        koneksi classKoneksi = new koneksi();
+        try {
+           con = classKoneksi.getConnection();
+        sql ="update `tabel odp` SET No='"+tfNo.getText()+"', Nama='"+tfNama.getText()+"' , Alamat='"+tfAlamat.getText()+"' where NIK='"+tfNIK.getText()+"'";
+        pst = con.prepareStatement( sql);
+        pst.executeUpdate(sql);
+         JOptionPane.showMessageDialog(null, "Updated");
+     }catch(SQLException ex){
+         JOptionPane.showMessageDialog(null, "Error");
+     }   
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+        koneksi classKoneksi = new koneksi();
+        try {
+           con = classKoneksi.getConnection();
+        sql ="delete from `tabel odp` where NIK='"+tfNIK.getText()+"'";
+        pst = con.prepareStatement( sql);
+        pst.executeUpdate(sql);
+         JOptionPane.showMessageDialog(null, "Deleted");
+     }catch(SQLException ex){
+         JOptionPane.showMessageDialog(null, "Error");
+     }   
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void tfNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNoActionPerformed
+        // TODO add your handling code here:
+         try{
+            rs = st.executeQuery("select * from `tabel odp` where No='"+tfNo.getText()+"' ");
+            if (rs.next()) {
+                tfNIK.setText(rs.getString("NIK"));
+                tfNama.setText(rs.getString("Nama"));
+                tfAlamat.setText(rs.getString("Alamat"));
+            }else{
+                bersih();
+            }
+        }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, "error");
+    }
+    }//GEN-LAST:event_tfNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,17 +358,21 @@ public class inputadmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Delete;
     private javax.swing.JButton btInput;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tabelodp;
     private javax.swing.JTextField tfAlamat;
     private javax.swing.JTextField tfNIK;
     private javax.swing.JTextField tfNama;
+    private javax.swing.JTextField tfNo;
     // End of variables declaration//GEN-END:variables
 }

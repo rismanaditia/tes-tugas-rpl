@@ -25,6 +25,7 @@ public class inputadmin2 extends javax.swing.JFrame {
     public ResultSet rs;
     public DefaultTableModel tm;
     public PreparedStatement pst;
+    private String sql;
     /**
      * Creates new form inputadmin2
      */
@@ -40,7 +41,7 @@ public class inputadmin2 extends javax.swing.JFrame {
         try{
             con = classKoneksi.getConnection();
             st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM `tabel odp`");
+            rs = st.executeQuery("SELECT * FROM `tabel pdp`");
             int no = 1;
             while (rs.next()){
                 String[] row = {Integer.toString(no),rs.getString(2),rs.getString(3),rs.getString(4)};
@@ -74,9 +75,12 @@ public class inputadmin2 extends javax.swing.JFrame {
         tabelpdp = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        tfNo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel1.setText("Input & Edit Data PDP");
 
         jButton1.setText("Input");
@@ -95,6 +99,12 @@ public class inputadmin2 extends javax.swing.JFrame {
         tfNIK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfNIKActionPerformed(evt);
+            }
+        });
+
+        tfNama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNamaActionPerformed(evt);
             }
         });
 
@@ -126,6 +136,20 @@ public class inputadmin2 extends javax.swing.JFrame {
         });
 
         jButton4.setText("Delete");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("No");
+
+        tfNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,74 +158,99 @@ public class inputadmin2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(41, 41, 41)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(tfNIK)
-                                                .addComponent(tfNama)
-                                                .addComponent(tfAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(31, 31, 31)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfNIK)
+                            .addComponent(tfNama)
+                            .addComponent(tfAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(tfNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel1)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(3, 3, 3)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tfAlamat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jButton3)
-                        .addGap(9, 9, 9)
+                        .addGap(29, 29, 29)
                         .addComponent(jButton4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bersih(){
+        tfNIK.setText("");
+        tfNama.setText("");
+        tfAlamat.setText("");
+    }
+    
     private void tfNIKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNIKActionPerformed
         // TODO add your handling code here:
+        try{
+            rs = st.executeQuery("select * from `tabel pdp` where NIK='"+tfNIK.getText()+"' ");
+            if (rs.next()) {
+                tfNIK.setText(rs.getString("NIK"));
+                tfNama.setText(rs.getString("Nama"));
+                tfAlamat.setText(rs.getString("Alamat"));
+            }else{
+                bersih();
+            }
+        }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, "error");
+    }
     }//GEN-LAST:event_tfNIKActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -214,15 +263,14 @@ public class inputadmin2 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         inputdata2 id2 = new inputdata2();
-      int no = 1;
-      id2.No = Integer.toString(no);
-      no++;
+      id2.No = tfNo.getText();
       id2.NIK = tfNIK.getText();
       id2.Nama = tfNama.getText();
       id2.Alamat = tfAlamat.getText();
         try {
             id2.simpan();
                   JOptionPane.showMessageDialog(rootPane,"berhasil dimasukan");
+                  bersih();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "error");
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -231,16 +279,52 @@ public class inputadmin2 extends javax.swing.JFrame {
         // TODO add your handling code here:
         koneksi classKoneksi = new koneksi();
      try {
-         con = classKoneksi.getConnection();
-         int no = 1;
-         no++;
-        st.executeUpdate(" Update `tabelpdp` set No='"+ Integer.toString(no)+"', NIK='"+ tfNIK.getText()+"', Nama='"+ tfNama.getText()+"', Alamat='"+ tfAlamat.getText()+"' where NIK='"+tfNIK.getText()+"'");
-    
+           int no = 1;
+           no++;
+           con = classKoneksi.getConnection();
+        sql ="update `tabel pdp` SET No='"+tfNo.getText()+"', Nama='"+tfNama.getText()+"' , Alamat='"+tfAlamat.getText()+"' where NIK='"+tfNIK.getText()+"'";
+        no++;
+        pst = con.prepareStatement( sql);
+        pst.executeUpdate(sql);
          JOptionPane.showMessageDialog(null, "Updated");
      }catch(SQLException ex){
          JOptionPane.showMessageDialog(null, "Error");
      }   
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tfNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfNamaActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        koneksi classKoneksi = new koneksi();
+        try {
+           con = classKoneksi.getConnection();
+        sql ="delete from `tabel pdp` where NIK='"+tfNIK.getText()+"'";
+        pst = con.prepareStatement( sql);
+        pst.executeUpdate(sql);
+         JOptionPane.showMessageDialog(null, "Deleted");
+     }catch(SQLException ex){
+         JOptionPane.showMessageDialog(null, "Error");
+     }   
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tfNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNoActionPerformed
+     // TODO add your handling code here:
+             try{
+            rs = st.executeQuery("select * from `tabel pdp` where No='"+tfNo.getText()+"' ");
+            if (rs.next()) {
+                tfNIK.setText(rs.getString("NIK"));
+                tfNama.setText(rs.getString("Nama"));
+                tfAlamat.setText(rs.getString("Alamat"));
+            }else{
+                bersih();
+            }
+        }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, "error");
+    }
+    }//GEN-LAST:event_tfNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,10 +370,12 @@ public class inputadmin2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelpdp;
     private javax.swing.JTextField tfAlamat;
     private javax.swing.JTextField tfNIK;
     private javax.swing.JTextField tfNama;
+    private javax.swing.JTextField tfNo;
     // End of variables declaration//GEN-END:variables
 }

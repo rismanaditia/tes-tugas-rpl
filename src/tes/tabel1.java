@@ -19,28 +19,54 @@ public class tabel1 extends javax.swing.JFrame {
     public Statement st;
     public ResultSet rs;
     public DefaultTableModel tm;
-    
+    public DefaultTableModel tm2;
     /**
      * Creates new form tabel1
      */
     public tabel1() {
         initComponents();
-        String[] header = {"ODP","PDP"};
+        {String[] header = {"ODP"};
         tm = new DefaultTableModel(header,0);
         tab1.setModel(tm);
+        tampil();
+        }
+        {String[] header2 = {"PDP"};
+        tm2 = new DefaultTableModel(header2,0);
+        tab2.setModel(tm2);
+        tampil2();
+        }
+        
     }
-    
     public void tampil(){
         koneksi classKoneksi = new koneksi();
         try{
             con = classKoneksi.getConnection();
             st = con.createStatement();
-            rs = st.executeQuery("SELECT *  FROM keseluruhan" );
+            rs = st.executeQuery("SELECT * FROM `tabel odp` ORDER BY `No` DESC LIMIT 1");
+            while (rs.next()){
+                String [] row = {rs.getString(1)};
+            tm.addRow(row);
+            }
         }catch(SQLException ex){
           System.out.print(ex.getMessage());
         }
     }
+    
 
+    public void tampil2(){
+        koneksi classKoneksi = new koneksi();
+        try{
+            con = classKoneksi.getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM `tabel pdp` ORDER BY `No` DESC LIMIT 1");
+            while (rs.next()){
+                String [] row = {rs.getString(1)};
+                tm2.addRow(row);
+            }
+        }catch(SQLException ex){
+          System.out.print(ex.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,6 +81,9 @@ public class tabel1 extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tab2 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,6 +108,7 @@ public class tabel1 extends javax.swing.JFrame {
             }
         });
 
+        tab1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -92,37 +122,75 @@ public class tabel1 extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tab1);
 
+        tab2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tab2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PDP"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tab2);
+
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 15)); // NOI18N
+        jLabel1.setText("Status Jumlah Keseuruhan ODP dan  PDP di Kelurahan Sukapura");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(73, 73, 73))
             .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton1)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(391, 391, 391)
-                        .addComponent(jButton3))
+                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton1)
-                        .addGap(102, 102, 102)
+                        .addGap(64, 64, 64)
                         .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(42, 42, 42)
-                .addComponent(jButton3)
-                .addGap(59, 59, 59))
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jButton3)))
+                .addGap(50, 50, 50))
         );
 
         pack();
@@ -188,7 +256,10 @@ public class tabel1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tab1;
+    private javax.swing.JTable tab2;
     // End of variables declaration//GEN-END:variables
 }

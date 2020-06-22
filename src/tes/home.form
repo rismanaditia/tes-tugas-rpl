@@ -36,7 +36,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="215" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="134" max="32767" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,7 +45,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="91" max="32767" attributes="0"/>
+              <EmptySpace pref="84" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -84,7 +84,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Selamat Datang di Aplikasi"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Trebuchet MS" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Selamat Datang di Aplikasi COVID-19"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -57,7 +57,8 @@ public class home extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Selamat Datang di Aplikasi");
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel1.setText("Selamat Datang di Aplikasi COVID-19");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,14 +75,14 @@ public class home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
